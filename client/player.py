@@ -19,7 +19,7 @@ class PlayerWidget(QWidget):
         playBackLayout = QHBoxLayout()
         self.player = QMediaPlayer()
         self.playButton = QPushButton("Run WatchDog")
-        self.playButton.clicked.connect(self.player.play)
+        self.playButton.clicked.connect(self.handlePlay)
         self.stopButton = QPushButton("Stop WatchDog")
         self.stopButton.clicked.connect(self.player.stop)
         self.videoWidget = QVideoWidget()
@@ -31,8 +31,12 @@ class PlayerWidget(QWidget):
         playerLayout.addLayout(playBackLayout)
         self.setLayout(playerLayout)
     
-    def test_click(self):
-        print("clicked")
+    def handlePlay(self):
+        
+        #TODO: Run model.py
+        #TODO: send post request to server 
+        #TODO: add the log
+        self.player.play()
         
         
         

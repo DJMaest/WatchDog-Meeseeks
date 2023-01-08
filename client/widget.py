@@ -8,6 +8,7 @@ from settings import Settings
 import requests
 
 class Widget(QWidget):
+    #TODO: Add logs from model.py in player.py to the self.logsText
     def __init__(self):
         super().__init__()
        
@@ -19,11 +20,10 @@ class Widget(QWidget):
         home_layout = QHBoxLayout()
 
         player = PlayerWidget()
-        
-
+    
         self.logsText = QTextEdit()
         self.logsText.setReadOnly(True)
-        self.logsText.append("He he\nhehe\nhehe\nhehe\nhehe\n")
+        # self.logsText.append("He he\nhehe\nhehe\nhehe\nhehe\n")
         self.logsText.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         self.logsText.moveCursor(QTextCursor.End)
         home_layout.addWidget(self.logsText)
