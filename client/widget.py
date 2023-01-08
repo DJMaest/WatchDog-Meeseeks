@@ -6,6 +6,7 @@ from PySide6.QtDesigner import QDesignerFormWindowCursorInterface
 from PySide6.QtGui import QTextCursor
 from player import PlayerWidget
 from settings import Settings
+import requests
 
 class Widget(QWidget):
     def __init__(self):
@@ -13,7 +14,7 @@ class Widget(QWidget):
        
         self.setWindowTitle("Watchdog")
 
-        tab_widget = QTabWidget(self)
+        self.tab_widget = QTabWidget(self)
 
         widget_home = QWidget()
         home_layout = QHBoxLayout()
@@ -32,10 +33,29 @@ class Widget(QWidget):
         settingsWidget = Settings()
 
         #Add tabs to widget
-        tab_widget.addTab(widget_home,"Home")
-        tab_widget.addTab(settingsWidget,"Settings")
+        self.tab_widget.addTab(widget_home,"Home")
+        self.tab_widget.addTab(settingsWidget,"Settings")
+        settingsWidget.saveButton.clicked.connect(self.back_tab)
         
         layout = QVBoxLayout()
-        layout.addWidget(tab_widget)
+        layout.addWidget(self.tab_widget)
 
         self.setLayout(layout)
+
+    def back_tab(self):
+        cur_index = self.tab_widget.currentIndex()
+        if cur_index > 0:
+            self.tab_widget.setCurrentIndex(cur_index-1)
+        #self.send_request()
+
+    def send_request(self):
+        url = 'http://localhost:3000/notification'
+        f = open("info", "r")
+        listItems = f.read().splitlines()
+        mail = listItems[0]
+        number = listItems[1]
+        data= {
+            "email": mail,
+            "phoneNumber": int(number)
+        }
+        requests.post(url, json = data)
