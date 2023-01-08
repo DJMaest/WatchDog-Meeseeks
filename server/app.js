@@ -3,11 +3,14 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const express = require('express');
-const axios = require("axios");
 let bodyParser = require("body-parser");
 let nodemailer = require('nodemailer');
 const app = express();
 const port = 3000;
+
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = require('twilio')(accountSid, authToken);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -29,7 +32,7 @@ app.post('/notification', (req, res) => {
     });
     
     let mailOptions = {
-      from: 'darto.geda@gmail.com',
+      from: process.env.MAIL_USERNAME,
       to: `${data.email}`,
       subject: 'Watchdog notification',
       text: 'A suspicious person has been detected near your car'
@@ -42,6 +45,15 @@ app.post('/notification', (req, res) => {
         console.log('Email sent: ' + info.response);
       }
     });
+
+    client.messages
+      .create({
+        body: 'Watchdog notification: A suspicious person has been detected near your car',
+        from: process.env.TEXT_NUMBER,
+        to: `${data.phoneNumber}`
+      })
+      .then(message => console.log("Text message status: " + message.status));
+
     res.send("Done");
 });
 
