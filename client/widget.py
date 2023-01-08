@@ -19,7 +19,7 @@ class Widget(QWidget):
         widget_home = QWidget()
         home_layout = QHBoxLayout()
 
-        player = PlayerWidget()
+
     
         self.logsText = QTextEdit()
         self.logsText.setReadOnly(True)
@@ -27,6 +27,7 @@ class Widget(QWidget):
         self.logsText.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         self.logsText.moveCursor(QTextCursor.End)
         home_layout.addWidget(self.logsText)
+        player = PlayerWidget(self.logsText, self)
         home_layout.addWidget(player)
         widget_home.setLayout(home_layout)        
         settingsWidget = Settings()
