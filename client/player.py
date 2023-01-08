@@ -9,6 +9,8 @@ from PySide6.QtMultimedia import (QAudio, QAudioOutput, QMediaFormat,
                                   QMediaPlayer)
 from PySide6.QtMultimediaWidgets import QVideoWidget
 
+import os
+
 class PlayerWidget(QWidget):
 
     def __init__(self):
@@ -21,13 +23,16 @@ class PlayerWidget(QWidget):
         self.stopButton = QPushButton("Stop WatchDog")
         self.stopButton.clicked.connect(self.player.stop)
         self.videoWidget = QVideoWidget()
-        self.player.setSource("theft.mp4")
+        self.player.setSource(os.path.abspath("theft.mp4"))
         self.player.setVideoOutput(self.videoWidget)
         playerLayout.addWidget(self.videoWidget)
         playBackLayout.addWidget(self.playButton)
         playBackLayout.addWidget(self.stopButton)
         playerLayout.addLayout(playBackLayout)
         self.setLayout(playerLayout)
+    
+    def test_click(self):
+        print("clicked")
         
         
         

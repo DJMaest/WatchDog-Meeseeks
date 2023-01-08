@@ -2,7 +2,6 @@ from PySide6.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QTabWidget, QPu
 from PySide6.QtMultimedia import (QAudio, QAudioOutput, QMediaFormat,
                                   QMediaPlayer)
 from PySide6.QtMultimediaWidgets import QVideoWidget
-from PySide6.QtDesigner import QDesignerFormWindowCursorInterface
 from PySide6.QtGui import QTextCursor
 from player import PlayerWidget
 
